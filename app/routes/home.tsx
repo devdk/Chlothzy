@@ -1,9 +1,10 @@
+// app/routes/home.tsx
 import React, { useEffect, useRef, useState } from "react";
-import api from "../utils/api";
 import Header from "~/components/Header";
 import { useCart } from "~/context/CartContext";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import api from "~/utils/api";
 
 const categories = [
   { id: 1, title: "All", value: "all", image: "https://source.unsplash.com/600x400/?fashion" },
@@ -28,14 +29,14 @@ export default function Home() {
   const { addToCart } = useCart();
 
   useEffect(() => {
-  api.get("/api/products")
-    .then((res) => {
-      setProducts(res.data);
-      setFilteredProducts(res.data);
-    })
-    .catch((err) => console.error("Failed to fetch products", err));
-}, []);
-
+    api
+      .get("/api/products")
+      .then((res) => {
+        setProducts(res.data);
+        setFilteredProducts(res.data);
+      })
+      .catch((err) => console.error("Failed to fetch products", err));
+  }, []);
 
   useEffect(() => {
     if (selectedCategory === "all") {
@@ -57,7 +58,7 @@ export default function Home() {
 
   return (
     <div className="font-sans">
-      {/* <Header /> */}
+      <Header />
 
       {/* Hero Section */}
       <section
