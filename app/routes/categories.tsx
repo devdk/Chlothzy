@@ -27,7 +27,7 @@ export default function Categories() {
 
   return (
     <div className="font-sans">
-      {/* <Header /> */}
+      <Header />
       <div className="max-w-7xl mx-auto py-12 px-4">
         <h1 className="text-3xl font-bold mb-8 text-center">All Products</h1>
 
