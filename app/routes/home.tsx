@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import Header from "~/components/Header";
 import { useCart } from "~/context/CartContext";
 import { motion } from "framer-motion";
@@ -28,14 +28,15 @@ export default function Home() {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    axios
-      .get("api/products")
-      .then((res) => {
-        setProducts(res.data);
-        setFilteredProducts(res.data);
-      })
-      .catch((err) => console.error("Failed to fetch products", err));
-  }, []);
+  api
+    .get("/api/products")
+    .then((res) => {
+      setProducts(res.data);
+      setFilteredProducts(res.data);
+    })
+    .catch((err) => console.error("Failed to fetch products", err));
+}, []);
+
 
   useEffect(() => {
     if (selectedCategory === "all") {
