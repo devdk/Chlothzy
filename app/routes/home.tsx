@@ -28,8 +28,7 @@ export default function Home() {
   const { addToCart } = useCart();
 
   useEffect(() => {
-  api
-    .get("/api/products")
+  api.get("/api/products")
     .then((res) => {
       setProducts(res.data);
       setFilteredProducts(res.data);
