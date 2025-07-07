@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 export default function Header() {
   const [user, setUser] = useState<{ name: string } | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
     const token = localStorage.getItem("token");
 
-    if (token) {
-      setIsLoggedIn(true);
-    }
+    if (token) setIsLoggedIn(true);
 
     if (userData) {
       try {
@@ -38,9 +37,7 @@ export default function Header() {
           <Link to="/cart">Cart</Link>
 
           {isLoggedIn ? (
-            <span className="text-gray-700">
-              Hi, {user?.name?.split(" ")[0] || "User"}
-            </span>
+            <span className="text-gray-700">Hi, {user?.name?.split(" ")[0] || "User"}</span>
           ) : (
             <>
               <Link to="/login">Login</Link>
@@ -56,11 +53,40 @@ export default function Header() {
           </Link>
         </nav>
 
-        {/* Mobile Menu Button (optional) */}
-        <button className="md:hidden px-2 py-1 border rounded text-gray-600">
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden px-2 py-1 border rounded text-gray-600"
+        >
           ☰
         </button>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <nav className="md:hidden bg-white px-4 py-2 space-y-2 shadow">
+          <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+          <Link to="/categories" onClick={() => setMobileMenuOpen(false)}>Categories</Link>
+          <Link to="/cart" onClick={() => setMobileMenuOpen(false)}>Cart</Link>
+
+          {isLoggedIn ? (
+            <span className="block text-gray-700">Hi, {user?.name?.split(" ")[0] || "User"}</span>
+          ) : (
+            <>
+              <Link to="/login" onClick={() => setMobileMenuOpen(false)}>Login</Link>
+              <Link to="/register" onClick={() => setMobileMenuOpen(false)}>Register</Link>
+            </>
+          )}
+
+          <Link
+            to="/categories"
+            onClick={() => setMobileMenuOpen(false)}
+            className="inline-block bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded"
+          >
+            Shop Now
+          </Link>
+        </nav>
+      )}
     </header>
   );
 }
