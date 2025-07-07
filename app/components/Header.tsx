@@ -10,20 +10,27 @@ export default function Header() {
     const userData = localStorage.getItem("user");
     const token = localStorage.getItem("token");
 
-    if (token) setIsLoggedIn(true);
+    if (token) {
+      setIsLoggedIn(true);
+    }
+
     if (userData) {
       try {
         const parsedUser = JSON.parse(userData);
         setUser(parsedUser);
       } catch (err) {
-        console.error("Invalid user data");
+        console.error("Invalid user data in localStorage");
       }
     }
   }, []);
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+  };
+
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50 relative">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <header className="bg-white shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative">
         {/* Logo */}
         <Link to="/" className="text-2xl font-bold text-pink-600">
           Clothzy
@@ -54,40 +61,38 @@ export default function Header() {
           </Link>
         </nav>
 
-        {/* Mobile Menu Toggle Button */}
+        {/* Mobile Menu Button */}
         <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden px-2 py-1 border rounded text-gray-600 z-[60]"
+          onClick={toggleMobileMenu}
+          className="md:hidden px-3 py-2 border rounded text-gray-600 z-50"
         >
           ☰
         </button>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="absolute top-full right-4 mt-2 w-48 bg-white border rounded shadow-md flex flex-col items-end p-4 text-right md:hidden z-40">
+            <Link to="/" onClick={toggleMobileMenu} className="mb-2 hover:text-pink-600">Home</Link>
+            <Link to="/categories" onClick={toggleMobileMenu} className="mb-2 hover:text-pink-600">Categories</Link>
+            <Link to="/cart" onClick={toggleMobileMenu} className="mb-2 hover:text-pink-600">Cart</Link>
+            {isLoggedIn ? (
+              <span className="mb-2 text-gray-700">Hi, {user?.name?.split(" ")[0] || "User"}</span>
+            ) : (
+              <>
+                <Link to="/login" onClick={toggleMobileMenu} className="mb-2 hover:text-pink-600">Login</Link>
+                <Link to="/register" onClick={toggleMobileMenu} className="mb-2 hover:text-pink-600">Register</Link>
+              </>
+            )}
+            <Link
+              to="/categories"
+              onClick={toggleMobileMenu}
+              className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded w-full text-center mt-2"
+            >
+              Shop Now
+            </Link>
+          </div>
+        )}
       </div>
-
-      {/* Mobile Menu Dropdown */}
-      {isMobileMenuOpen && (
-        <div className="absolute right-4 top-full mt-2 bg-white shadow-lg rounded-md z-50 w-48 flex flex-col space-y-3 p-4 md:hidden text-sm text-gray-700 font-medium">
-          <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-          <Link to="/categories" onClick={() => setIsMobileMenuOpen(false)}>Categories</Link>
-          <Link to="/cart" onClick={() => setIsMobileMenuOpen(false)}>Cart</Link>
-
-          {isLoggedIn ? (
-            <span>Hi, {user?.name?.split(" ")[0] || "User"}</span>
-          ) : (
-            <>
-              <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>Login</Link>
-              <Link to="/register" onClick={() => setIsMobileMenuOpen(false)}>Register</Link>
-            </>
-          )}
-
-          <Link
-            to="/categories"
-            className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded text-center"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Shop Now
-          </Link>
-        </div>
-      )}
     </header>
   );
 }
