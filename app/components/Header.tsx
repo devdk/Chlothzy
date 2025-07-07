@@ -62,15 +62,15 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - right aligned, vertical */}
       {mobileMenuOpen && (
-        <nav className="md:hidden bg-white px-4 py-2 space-y-2 shadow">
+        <div className="absolute top-[70px] right-4 w-40 bg-white rounded shadow-md py-3 px-4 flex flex-col space-y-2 text-sm font-medium text-gray-700 md:hidden z-50">
           <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
           <Link to="/categories" onClick={() => setMobileMenuOpen(false)}>Categories</Link>
           <Link to="/cart" onClick={() => setMobileMenuOpen(false)}>Cart</Link>
 
           {isLoggedIn ? (
-            <span className="block text-gray-700">Hi, {user?.name?.split(" ")[0] || "User"}</span>
+            <span>Hi, {user?.name?.split(" ")[0] || "User"}</span>
           ) : (
             <>
               <Link to="/login" onClick={() => setMobileMenuOpen(false)}>Login</Link>
@@ -81,11 +81,11 @@ export default function Header() {
           <Link
             to="/categories"
             onClick={() => setMobileMenuOpen(false)}
-            className="inline-block bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded"
+            className="bg-pink-500 hover:bg-pink-600 text-white px-3 py-2 rounded text-center"
           >
             Shop Now
           </Link>
-        </nav>
+        </div>
       )}
     </header>
   );
