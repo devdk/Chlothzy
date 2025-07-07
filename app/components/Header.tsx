@@ -22,7 +22,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header className="bg-white shadow-md sticky top-0 z-50 relative">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="text-2xl font-bold text-pink-600">
@@ -54,18 +54,18 @@ export default function Header() {
           </Link>
         </nav>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Toggle Button */}
         <button
-          className="md:hidden px-2 py-1 border rounded text-gray-600"
-          onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden px-2 py-1 border rounded text-gray-600 z-[60]"
         >
           ☰
         </button>
       </div>
 
-      {/* Mobile Menu (Dropdown Vertical Right-Aligned) */}
+      {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute right-4 top-[72px] bg-white rounded-md shadow-md p-4 w-44 flex flex-col space-y-3 z-50 text-sm font-medium text-gray-700">
+        <div className="absolute right-4 top-full mt-2 bg-white shadow-lg rounded-md z-50 w-48 flex flex-col space-y-3 p-4 md:hidden text-sm text-gray-700 font-medium">
           <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
           <Link to="/categories" onClick={() => setIsMobileMenuOpen(false)}>Categories</Link>
           <Link to="/cart" onClick={() => setIsMobileMenuOpen(false)}>Cart</Link>
@@ -81,8 +81,8 @@ export default function Header() {
 
           <Link
             to="/categories"
+            className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded text-center"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="bg-pink-500 hover:bg-pink-600 text-white text-center px-4 py-2 rounded"
           >
             Shop Now
           </Link>
