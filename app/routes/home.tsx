@@ -120,7 +120,7 @@ export default function Home() {
         >
           <h2 className="text-4xl font-bold mb-4">Style That Speaks</h2>
           <p className="text-lg mb-6">
-            Discover outfits that define your vibe and set the trend. Elegance meets bold – only at Chlothzy.
+            Discover outfits that define your vibe and set the trend. GenZ trend – only at Chlothzy.
           </p>
           <Link
             to="/categories"
